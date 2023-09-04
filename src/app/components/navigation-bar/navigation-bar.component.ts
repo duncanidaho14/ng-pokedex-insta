@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PokemonService } from '../../services/pokemon/pokemon.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexModule } from '@angular/flex-layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -15,7 +16,7 @@ import { FlexModule } from '@angular/flex-layout';
 export class NavigationBarComponent {
   @ViewChild('searchInput') searchInputRef: ElementRef<HTMLInputElement> | undefined;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService, private router: Router) {}
 
   /**
    * Automatically search the Pokemon when pressing ENTER inside the input
@@ -28,5 +29,9 @@ export class NavigationBarComponent {
     this.pokemonService.getPokemon(value).then((): void => {
       if (this.searchInputRef !== undefined) this.searchInputRef.nativeElement.value = '';
     });
+  }
+
+  goToPokemonList() {
+    this.router.navigate(['/pokemon-list']);
   }
 }
